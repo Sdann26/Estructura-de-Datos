@@ -1,0 +1,1 @@
+1. Desarrolle un programa que te pide un array de tamaño N y te imprima su elemento mayoría. Este tiene como caracteriztica que su elemento mayoría es (>N/2); en caso contrario, imprimir que no existe.
