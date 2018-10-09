@@ -29,10 +29,10 @@ int main(){
 		
 		cout<<"MENU:\n"<<endl;
 		
-		cout<<"1. Insertar nodo en Cola"<<endl;
+		cout<<"1. Insertar nodo en la Cola"<<endl;
 		cout<<"2. Elimina el primer nodo de la Cola"<<endl;
 		cout<<"3. Eliminar toda la Cola"<<endl;
-		cout<<"4. Imprimir cola completa"<<endl;
+		cout<<"4. Imprimir Cola completa"<<endl;
 		cout<<"5. Busca un elemento en la cola"<<endl;
 		cout<<"6. Salir"<<endl;
 		
@@ -193,23 +193,40 @@ void imprimirCola(Nodo *Frente){
 // Busca la posicion de un elemento en la Cola
 void buscarCola(Nodo *&Frente, Nodo *&Fin, int n){
 	
-	Nodo *aux=Frente;
+	Nodo *aux = Frente;
+	int pos=1;
+	int encontrado=0;
 	
-	int cont=1;
+	cout<<"\n\t";
 	
-	while(aux != NULL){
+	if (aux != NULL){
 		
-		if(aux->dato==n){
+		while (aux != NULL){
+		
+			if (aux->dato == n){
 			
-			cout<<"\nEl elemento se encuentra en la posicion "<<cont;
-			break;
+				encontrado = 1;
+				break;
+			
+			}
+		
+		aux = aux -> siguiente;
+		
+		pos++;
+		
+		}
+	
+		if(encontrado == 1){
+			
+			cout<<"El elemento "<<aux->dato<<" en la posicion "<<pos<<endl;				
 			
 		}
 		
-		aux = aux->siguiente;
+		else cout<<"No existe ese numero en la Cola\n";	
 		
-		cont++;
 		
 	}
+	
+	else cout<<"La cola esta vacia\n";
 	
 }
