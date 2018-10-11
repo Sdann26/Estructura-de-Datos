@@ -1,0 +1,1 @@
+1. Desarrolle el programa del juego de los suicidios
