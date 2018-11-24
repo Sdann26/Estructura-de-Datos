@@ -15,6 +15,9 @@ Nodo *crearNodo(int);
 void insertarArbol(Nodo *&, int); 
 void mostrarArbol(Nodo *, int); // Imprime el arbol hechado
 bool buscarArbol(Nodo* , int); // Algoritmo de busqueda binaria
+void preOrden(Nodo* ); 
+void inOrden(Nodo* ); 
+void postOrden(Nodo* ); 
 
 int main(){
 	
@@ -31,7 +34,10 @@ int main(){
 		cout << "\n1. Inserta el dato en el Arbol.";
 		cout << "\n2. Imprimir el Arbol completo.";
 		cout << "\n3. Busca un elemento en el Arbol.";
-		cout << "\n4. Salir.";
+		cout << "\n4. Realizar Recorrido Pre-Orden:";
+		cout << "\n5. Realizar Recorrido In-Orden:";
+		cout << "\n6. Realizar Recorrido Post-Orden:";
+		cout << "\n7. Salir.";
 		
 		cout << "\n\nElije una opcion: ";
 		cin>>opc;
@@ -41,27 +47,31 @@ int main(){
 			case 1: cout << "\nQue valor desea agregar al Arbol: ";
 					cin >> n;
 					insertarArbol(arbol, n); 
-					cout<<"\nSe agrego correctamente "<<n<<" al Arbol\n\n"; break;
-			case 2: cout << "\nImprimiendo Arbol... \n";
+					cout << "\nSe agrego correctamente "<<n<<" al Arbol\n\n"; break;
+			case 2: cout << "\nImprimiendo Arbol... \n"<<endl;
 					mostrarArbol(arbol, cont); break;
 			case 3: cout << "\nQue elemento desea buscar: "; 
 					cin >> n;
 					busq = buscarArbol(arbol,n);
 					if(busq == true){
 						
-						cout<<"\nSi se encuentra el elemento.\n"<<n<<endl;
+						cout<<"\nSi se encuentra el elemento "<<n<<endl<<endl;
 						
 					}
 					
 					else cout<<"\nNo existe este elemento en el Arbol.\n"<<endl;
 					break;
-			case 4: break;
-			default: cout<<"\nNo inserto ninguna opcion\n"<<endl;
+			case 4: cout << "\nRecorrido: ";
+					preOrden(arbol); cout<<"FIN\n\n"; break;
+			case 5: cout << "\nRecorrido: ";
+					inOrden(arbol); cout<<"FIN\n\n"; break;
+			case 6: cout << "\nRecorrido: ";
+					postOrden(arbol); cout<<"FIN\n\n"; break;
+			case 7: break;
+			default: cout<<"\nNo inserto ninguna opcion.\n"<<endl;
 		}
 		
-	}while(opc != 4);
-
-	
+	}while(opc != 7);
 	
 	return 0;	
 	
@@ -161,6 +171,60 @@ bool buscarArbol(Nodo* arbol, int n){
 			buscarArbol(arbol -> izq, n);
 			
 		}
+		
+	}
+	
+}
+
+void preOrden(Nodo* arbol){ // Imprime la raiz luego al sub-arbol izquierdo al final el derecho
+	
+	if (arbol == NULL){
+		
+		return;
+		
+	}
+	
+	else{
+		
+		cout << arbol->dato << " -> ";
+		preOrden(arbol->izq);
+		preOrden(arbol->der);
+		
+	}
+	
+}
+
+void inOrden(Nodo* arbol){ // Imprime el sub-arbol izquierdo luego la raiz y al final el derecho
+	
+	if (arbol == NULL){
+		
+		return;
+		
+	}
+	
+	else{
+		
+		inOrden(arbol->izq);
+		cout << arbol->dato << " -> ";
+		inOrden(arbol->der);
+		
+	}
+	
+}
+
+void postOrden(Nodo* arbol){ // LLena los nodos de izquierda a derecha de el nivel mas bajo
+	
+	if (arbol == NULL){
+		
+		return;
+		
+	}
+	
+	else{
+		
+		postOrden(arbol->izq);
+		postOrden(arbol->der);
+		cout << arbol->dato << " -> ";
 		
 	}
 	
