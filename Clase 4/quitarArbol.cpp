@@ -79,7 +79,8 @@ int main(){
 					postOrden(arbol); cout<<"FIN\n\n"; break;
 			case 7: cout << "\nQue elemento desea eliminar: ";
 					cin >> n;
-					eliminarArbol(arbol, n); break;
+					eliminarArbol(arbol, n);
+					cout << endl; break;
 			case 8: break;
 			default: cout<<"\nNo inserto ninguna opcion.\n"<<endl;
 		}
@@ -278,7 +279,7 @@ Nodo *minimo(Nodo *arbol){
 	
 	if (arbol == NULL){
 		
-		return NULL; // Retorna NULL si esta vacio el nodo
+		return NULL; // Retorna NULL si esta vacio el arbol
 		
 	}
 	
@@ -319,7 +320,7 @@ void reemplazar (Nodo *arbol, Nodo *nuevoNodo){
 	if (nuevoNodo){
 		
 		// Procedemos a asignarle su nuevo padre
-		nuevoNodo->raiz =arbol->raiz;
+		nuevoNodo->raiz = arbol->raiz;
 		
 	}
 }
@@ -340,9 +341,7 @@ void eliminarNodo(Nodo *&nodoEliminar){
 	if (nodoEliminar->der && nodoEliminar->izq){ // Verifica si tiene nodo izquierdo y derecho
 		
 		Nodo *menor = minimo (nodoEliminar->der);
-		
 		nodoEliminar->dato = menor->dato;
-		
 		eliminarNodo(menor);
 		
 	}
@@ -361,5 +360,11 @@ void eliminarNodo(Nodo *&nodoEliminar){
 		
 	}
 	
+	else{ // Si un nodo no tiene hijos
+		
+		reemplazar(nodoEliminar,NULL);
+		destruirNodo(nodoEliminar);
+		
+	}
 	
 }
