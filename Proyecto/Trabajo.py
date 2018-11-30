@@ -12,9 +12,9 @@ class MonticuloBinario: #Constructor del Monticulo Binario
 	def insertar(self,k): # Metodo para insertar elemento en el monticulo
 		self.listaMonticulo.append(k) # Agrega un elemento al final de la lista
 		self.tamanoActual = self.tamanoActual + 1
-		self.infiltArriba(self.tamanoActual) 
+		self.flotar(self.tamanoActual) 
 
-	def infiltArriba(self,i): # Metodo para poner en orden el elemento insertado
+	def flotar(self,i): # Metodo para poner en orden elevandolo
 		while i // 2 > 0: # Verifica si la posicion del padre es 0 para salir del bucle
 			if self.listaMonticulo[i] < self.listaMonticulo[i // 2]: # Compara el elemento con su padre y si el padre es mayor estos cambian de sitio
 				tmp = self.listaMonticulo[i // 2]
@@ -24,15 +24,28 @@ class MonticuloBinario: #Constructor del Monticulo Binario
 
 ### ELIMINACION ###
 
+	def eliminar(self,k):
+		encontrado = 0; # Revisa si el elemento esta o no esta(Inicializa como si no estuviera)
+		for i in range(1,self.tamanoActual+1):
+			if(k == self.listaMonticulo[i]): # Busca el elemento en la lista
+				encontrado = encontrado + 1
+				self.listaMonticulo[i] = self.listaMonticulo[i] - k # Se vuelve el elemento minimo
+				self.flotar(i) # Ordenamos el arbol elevando el elemento minimo
+				self.eliminarMin() # Eliminamos este elemento que ahora es minimo
+				break
+
+		if(encontrado == 0): 
+			print("El elemento no fue encontrado\n")
+
 	def eliminarMin(self): # Metodo para eleminar el elemento minimo(Raiz)
 		valorSacado = self.listaMonticulo[1]
 		self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual] # Le da el valor del ultimo elemento de la lista(Monticulo) al primero
 		self.tamanoActual = self.tamanoActual - 1
 		self.listaMonticulo.pop() # Quita el ultimo elemento de la lista 
-		self.infiltAbajo(1)
+		self.hundir(1)
 		return valorSacado
 
-	def infiltAbajo(self,i): # Metodo para poner en orden luego de sacar el elemento
+	def hundir(self,i): # Metodo para poner en orden hundiendolo
 		while (i * 2) <= self.tamanoActual: # Verifica que el hijo sea menor que el padre(Este pasa a ser el ultimo elemento)
 			hm = self.hijoMin(i) # Le pasamos el valor de la posicion del hijo
 			if self.listaMonticulo[i] > self.listaMonticulo[hm]:
@@ -50,6 +63,35 @@ class MonticuloBinario: #Constructor del Monticulo Binario
 			else:
 				return i * 2 + 1 #Hijo Derecho
 
+### INCREMENTAR LLAVE ###
+
+	def incrementarLlave(self,k,cant):
+		encontrado = 0; # Revisa si el elemento esta o no esta(Inicializa como si no estuviera)
+		for i in range(1,self.tamanoActual+1):
+			if(k == self.listaMonticulo[i]): # Busca el elemento en la lista
+				encontrado = encontrado + 1
+				self.listaMonticulo[i] = self.listaMonticulo[i] + cant # Le suma la cantidad deseada 
+				self.hundir(i) # Ordenamos el arbol bajando el elemento
+				break
+
+		if(encontrado == 0): 
+			print("El elemento no fue encontrado\n")
+
+### DECREMENTAR LLAVE ###
+
+	def decrementarLlave(self,k,cant):
+		encontrado = 0; # Revisa si el elemento esta o no esta(Inicializa como si no estuviera)
+		for i in range(1,self.tamanoActual+1):
+			if(k == self.listaMonticulo[i]): # Busca el elemento en la lista
+				encontrado = encontrado + 1
+				self.listaMonticulo[i] = self.listaMonticulo[i] - cant # Le resta la cantidad deseada 
+				self.flotar(i) # Ordenamos el arbol subiendo el elemento
+				break
+
+		if(encontrado == 0): 
+			print("El elemento no fue encontrado\n")
+
+
 ### CONSTRUCCION ###
 
 	def construirMonticulo(self,unaLista):
@@ -57,7 +99,7 @@ class MonticuloBinario: #Constructor del Monticulo Binario
 		self.tamanoActual = len(unaLista)
 		self.listaMonticulo = [0] + unaLista[:]
 		while (i > 0):
-			self.infiltAbajo(i)
+			self.hundir(i)
 			i = i - 1
 
 ### IMPRIMIR ###
@@ -103,7 +145,7 @@ while opc != 6:
 
 	print ("1. Construccion de un monticulo")
 	print ("2. Insertar dato")
-	print ("3. Eliminar el menor dato")
+	print ("3. Eliminar dato")
 	print ("4. Incrementar una llave")
 	print ("5. Decrementar una llave")
 	print ("6. Salir\n")
@@ -130,17 +172,27 @@ while opc != 6:
 		print("")
 
 	elif opc == 3:
-		dato = MonticuloBinario.eliminarMin()
+		dato = int(input("Que dato desea eliminar: ")) 
+		MonticuloBinario.eliminar(dato)
 		print("")
-		print("Se ha eliminado "+str(dato)+" del monticulo",end="\n\n")
 		imprimir()
 		print("")
 
 	elif opc == 4:
-		print("Que valor desea incrementar")
+		dato = int(input("Que llave desea incrementar: "))
+		cant = int(input("En cuanto lo quiere incrementar: "))
+		MonticuloBinario.incrementarLlave(dato,cant)
+		print("")
+		imprimir()
+		print("")
 
 	elif opc == 5:
-		print("Que valor desea decrementar")
+		dato = int(input("Que llave desea decrementar: "))
+		cant = int(input("En cuento lo quiere decrementar: "))
+		MonticuloBinario.decrementarLlave(dato,cant)
+		print("")
+		imprimir()
+		print("")
 
 	elif opc == 6:
 		print("\t\tHasta pronto...")
