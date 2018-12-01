@@ -95,10 +95,10 @@ class MonticuloBinario: #Constructor del Monticulo Binario
 ### CONSTRUCCION ###
 
 	def construirMonticulo(self,unaLista):
-		i = len(unaLista) // 2
-		self.tamanoActual = len(unaLista)
-		self.listaMonticulo = [0] + unaLista[:]
-		while (i > 0):
+		i = len(unaLista) // 2 # Comenzaremos con la mitad del arbol
+		self.tamanoActual = len(unaLista) # Le pasa el tamaño de lista
+		self.listaMonticulo = [0] + unaLista[:] # Pasa todos los datos
+		while (i > 0): #Hunde todos los elementos desde la mitad al inicio
 			self.hundir(i)
 			i = i - 1
 
